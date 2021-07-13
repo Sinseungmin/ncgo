@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-
+import Search from './Searchbar'
 /* 
 Navigation
 - Navigation bar 
@@ -158,10 +158,7 @@ class Navigation extends Component {
 									</div>
 								</li>
 							</ul>
-							<form className="form-inline my-2 my-lg-0">
-								<input className="form-control mr-sm-2" type="text" placeholder="Search"></input>
-								<button className="btn btn-outline-info my-2 my-sm-0" type="submit" style={{ color : '#82CAFA', outlineColor:'#82CAFA'}}>Search</button>
-							</form>
+							<Search></Search>
 						</div>
 					</div>
 				</nav>

@@ -232,9 +232,8 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 		});
 
 		let nodeOptions: Array<nodeOptionsElem> = [
-			{ label: 'streetlemp', value: 'streetlemp'}, 
-			{ label: 'arbor', value: 'arbor' }, 
-			{ label: 'trashcan', value: 'trashcan' }, 
+			{ label: 'drone', value: 'drone'}, 
+			{ label: 'station', value: 'station' }, 
 		];
 		return (
 			<>
