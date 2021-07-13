@@ -142,7 +142,7 @@ class InputActionCard extends Component<
 						)}
 					</div>
 				</div>
-			// </div>
+			 </div>
 		);
 	}
 }

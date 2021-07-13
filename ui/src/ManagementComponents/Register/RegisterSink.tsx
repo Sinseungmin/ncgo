@@ -210,9 +210,9 @@ class RegisterSink extends Component<{}, RegisterSinkState> {
 								<div className="modal-footer">
 									<button
 										type="submit"
-										className="btn btn-success"
+										className="btn"
 										onClick={this.handleSubmit}
-										style={{ background: 'light' }}
+										style={{ background: '#82CAFA', color : 'white' }}
 									>
 										Submit
 									</button>

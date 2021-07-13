@@ -12,10 +12,10 @@ const SinkManagement: React.FunctionComponent = () => {
 			<div style={{ float: 'right' }}>
 				<button
 					type="button"
-					className="btn btn-success my-2 my-sm-0"
+					className="btn my-2 my-sm-0"
 					data-toggle="modal"
 					data-target="#register-sink-modal"
-					style={{ background: 'light' }}
+					style={{ background: '#82CAFA', color : 'white' }}
 				>
 					register sink
 				</button>

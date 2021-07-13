@@ -165,7 +165,7 @@ class RegisterTopic extends Component<{}, RegisterTopicState> {
 										type="submit"
 										className="btn"
 										onClick={this.handleSubmit}
-										style={{ background: 'pink' }}
+										style={{ background: '#82CAFA', color : 'white' }}
 									>
 										Submit
 									</button>

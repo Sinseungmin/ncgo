@@ -365,16 +365,16 @@ class RegisterLogic extends Component<{}, RegisterLogicState> {
 					))}
 					<button
 						type="button"
-						className="btn btn-success margin-right"
-						style={{ background: 'light' }}
+						className="btn margin-right"
+						style={{ background: '#82CAFA', color : 'white' }}
 						onClick={this.handleAddValueCardClick}
 					>
 						Add value
 					</button>
 					<button
 						type="button"
-						className="btn btn-success"
-						style={{ background: 'light' }}
+						className="btn "
+						style={{ background: '#82CAFA', color : 'white' }}
 						onClick={this.handleAddActionCardClick}
 					>
 						Add action
@@ -388,8 +388,8 @@ class RegisterLogic extends Component<{}, RegisterLogicState> {
 					<button
 						//type="submit"
 						type="button"
-						className="btn btn-success float-right"
-						style={{ background: 'light' }}
+						className="btn float-right"
+						style={{ background: '#82CAFA', color : 'white' }}
 						onClick={this.handleSubmit}
 					>
 						Submit

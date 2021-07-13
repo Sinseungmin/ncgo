@@ -62,8 +62,13 @@ class RegisterSensor extends Component<{}, RegisterSensorState> {
 				kindValid: true,
 			});
 		}
-		if (sensorKind == 'drone'){
-			alert('Please enter sensor name.');
+		else {
+			this.setState({
+				kind: sensorKind.value,
+				kindValid: false,
+			});
+		}
+		if (sensorKind.value == 'drone'){
 			let DroneOption: Array<value_list_elem> = [
 				{ value_name: 'battery'}, { value_name: 'gps' }, { value_name: 'atm'}, { value_name: 'accelerate' }, { value_name: 'speed' }
 			];
@@ -71,12 +76,16 @@ class RegisterSensor extends Component<{}, RegisterSensorState> {
 				sensor_values: DroneOption,
 				valueValid:true
 			});
-		} else {
-			this.setState({
-				kind: sensorKind.value,
-				kindValid: false,
-			});
 		}
+		if (sensorKind.value == 'station'){
+			let StationOption: Array<value_list_elem> = [
+				{ value_name: 'gps'}, { value_name: 'ultrasonic' }
+			];
+			this.setState({
+				sensor_values: StationOption,
+				valueValid:true
+			});
+		} 
 	}
 
 	// Handle value's name change by typing
@@ -136,7 +145,7 @@ class RegisterSensor extends Component<{}, RegisterSensorState> {
 			return;
 		}
 		if (!this.state.kindValid) {
-			alert('Please enter sensor name.');
+			alert('Please select sensor kind.');
 			return;
 		}
 		if (!this.state.valueValid) {
@@ -172,7 +181,7 @@ class RegisterSensor extends Component<{}, RegisterSensorState> {
 
 	render() {
 		let sensorOptions: Array<sensorOptionsElem> = [
-			{ label: 'drone', value: 'drone'}, { label: 'station', value: 'station' }, 
+			{ label: 'drone', value: 'drone'}, { label: 'station', value: 'station' }
 		];
 
 		return (

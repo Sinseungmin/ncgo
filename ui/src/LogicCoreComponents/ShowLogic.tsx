@@ -27,7 +27,7 @@ class ShowLogic extends Component<ShowLogicProps, {}> {
 					type="button"
 					className="btn "
 					data-toggle="modal"
-					style={{ background: 'rgba(0, 170, 70, 0.3)' }}
+					style={{ background: '#82CAFA', color : 'white'}}
 					data-target={'#'.concat(modal_id)}
 				>
 					show logic

@@ -13,8 +13,8 @@ class LogicCoreManagement extends Component {
 				<Link to="/registerLogic">
 					<button
 						type="button"
-						className="btn btn-success my-2 my-sm-0 float-right"
-						style={{ background: 'light' }}
+						className="btn my-2 my-sm-0 float-right"
+						style={{ background: '#82CAFA', color : 'white' }}
 					>
 						register logic
 					</button>

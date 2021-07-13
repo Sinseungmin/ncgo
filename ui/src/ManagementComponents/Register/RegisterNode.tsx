@@ -312,9 +312,9 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 									<div className="modal-footer">
 										<button
 											type="submit"
-											className="btn btn-success my-2 my-sm-0" 
+											className="btn my-2 my-sm-0" 
 											onClick={this.handleSubmit}
-											style={{ background: 'light' }}
+											style={{ background: '#82CAFA', color : 'white' }}
 										>
 											Submit
 										</button>

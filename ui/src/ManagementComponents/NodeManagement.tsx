@@ -106,10 +106,10 @@ class NodeManagement extends Component<{}, NodeManagementState> {
 				<div style={{ float: 'right' }}>
 					<button
 						type="button"
-						className="btn btn-success my-2 my-sm-0"
+						className="btn my-2 my-sm-0"
 						data-toggle="modal"
 						data-target="#register-node-modal"
-						style={{ background: 'light' }}
+						style={{ background: '#82CAFA', color : 'white' }}
 					>
 						register node
 					</button>
@@ -127,8 +127,8 @@ class NodeManagement extends Component<{}, NodeManagementState> {
 					<span >Viewer type </span>
 					<button
 						type="button"
-						className="btn btn-success my-2 my-sm-0"
-						style={{ background: 'light' }}
+						className="btn my-2 my-sm-0"
+						style={{ background: '#82CAFA', color : 'white' }}
 						onClick={this.handleAllClick}
 					>
 						All
@@ -136,8 +136,8 @@ class NodeManagement extends Component<{}, NodeManagementState> {
 					<span> </span>
 					<button
 						type="button"
-						className="btn btn-success my-2 my-sm-0"
-						style={{ background: 'light' }}
+						className="btn my-2 my-sm-0"
+						style={{ background: '#82CAFA', color : 'white' }}
 						onClick={this.handleMapClick}
 					>
 						Map

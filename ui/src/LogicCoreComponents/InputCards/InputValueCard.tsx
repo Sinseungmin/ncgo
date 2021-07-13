@@ -196,8 +196,8 @@ class InputValueCard extends Component<
 					<div className="col">
 						<button
 							type="button"
-							className="btn btn-success float-right"
-							style={{ background: 'light' }}
+							className="btn float-right"
+							style={{ background: '#82CAFA', color : 'white'}}
 							onClick={this.handleAddClick}
 						>
 							Add scope

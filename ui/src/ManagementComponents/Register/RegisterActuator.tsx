@@ -68,7 +68,7 @@ class RegisterActuator extends Component<{}, RegisterActuatorState> {
 					<div className="modal-dialog" role="document">
 						<div className="modal-content">
 							<div className="modal-header">
-								<h4 className="modal-title" id="register-actuator-modal">
+								<h4 className="modal-title" id="register-actuator-modal" >
 									Register actuator
 								</h4>
 								<button
@@ -97,9 +97,9 @@ class RegisterActuator extends Component<{}, RegisterActuatorState> {
 								<div className="modal-footer">
 									<button
 										type="submit"
-										className="btn btn-success"
+										className="btn "
 										onClick={this.handleSubmit}
-										style={{ background: 'light' }}
+										style={{ background: '#82CAFA', color : 'white' }}
 									>
 										Submit
 									</button>
