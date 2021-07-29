@@ -33,6 +33,37 @@ class Navigation extends Component {
 										to="/management"
 										style={{ color : 'white'}}
 									>
+										CUSTOMER
+									</NavLink>
+									<div
+										className="dropdown-menu"
+										aria-labelledby="navbarDropdown"
+										style={{ background: 'light' }}
+									>
+										<Link
+											className="dropdown-item"
+											to="/delivery"
+											style={{ background: 'light' }}
+										>
+											Delivery Service
+										</Link>
+										<Link
+											className="dropdown-item"
+											to="/tracking"
+											style={{ background: 'light' }}
+										>
+											Delivery Tracking
+										</Link>
+									</div>
+								</li>
+								<li className="nav-item dropdown">
+									<NavLink
+										className="nav-item nav-link dropdown-toggle"
+										role="button"
+										data-toggle="dropdown"
+										to="/management"
+										style={{ color : 'white'}}
+									>
 										MANAGEMENT
 									</NavLink>
 									<div

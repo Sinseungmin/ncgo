@@ -6,7 +6,7 @@ export interface nodeListElem {
 	lng: number;
 	sink_id: number;
 	sink: Array<sinkListElem>;
-	sensors: Array<sensorListElem>;
+	sensors: Array<value_list_elem>;
 }
 
 export interface locationElem {
@@ -23,9 +23,7 @@ export interface sensorListElem {
 }
 
 export interface value_list_elem {
-	sensor_id: number;
 	value_name: string;
-	index: number;
 }
 
 export interface actuatorListElem {
@@ -100,6 +98,7 @@ export interface nodeHealthCheckElem {
 	nid: number;
 	state: number;
 	battery: number;
+	location: locationElem;
 }
 
 // alarm

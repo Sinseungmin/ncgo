@@ -6,6 +6,7 @@ import { NODE_URL } from '../defineUrl';
 
 import {
 	nodeListElem,
+	value_list_elem,
 	sensorListElem,
 	nodeHealthCheckElem,
 } from '../ElemInterface/ElementsInterface';
@@ -165,9 +166,9 @@ class NodeMap extends Component<NodeMapProps, NodeMapState> {
 	// 마커 이미지 및 크기 지정 
 	// 노드 종류에 따라 지도 위 마커이미지 다르게 표시
 	addMarker(position: any, map: any) {
-		if ( position.kind  === 'streetlemp') var imageSrc = 'https://user-images.githubusercontent.com/50009240/111455569-4edede80-8759-11eb-952f-2df28fdcdc4c.png'
-		else if ( position.kind === 'trashcan') var imageSrc = 'https://user-images.githubusercontent.com/50009240/111451567-e857c180-8754-11eb-9299-0ea55e430b17.png'
-		else var imageSrc = 'https://user-images.githubusercontent.com/50009240/111451575-ebeb4880-8754-11eb-8459-eed8f0983c55.png'
+		if ( position.kind  === 'drone') var imageSrc = 'https://user-images.githubusercontent.com/68888653/126869406-4d22668f-04df-44e2-a952-6c4f7f9bc15d.png'
+		else if ( position.kind === 'station') var imageSrc = 'https://user-images.githubusercontent.com/68888653/126869445-228df4e6-6496-4597-b12e-7a0dd11a12d8.png'
+		else var imageSrc = 'https://user-images.githubusercontent.com/68888653/126869406-4d22668f-04df-44e2-a952-6c4f7f9bc15d.png'
 		
 		var imageSize = new window.kakao.maps.Size(30 , 35),
 			markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize),
@@ -192,7 +193,7 @@ class NodeMap extends Component<NodeMapProps, NodeMapState> {
 					'sink : ' + node.sink_id,
 					'id : ' + node.id,
 					'sensor : ' +
-						node.sensors.map((sensor: sensorListElem) => sensor.name.split('-')[1]),
+						node.sensors.map((sensor: value_list_elem) => sensor.value_name+', '),
 				],
 				latlng: new window.kakao.maps.LatLng(node.lat, node.lng),
 			};

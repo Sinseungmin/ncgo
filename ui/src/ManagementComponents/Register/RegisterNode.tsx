@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
 import Select from 'react-select';
 import {
-	sensorListElem,
-	sensorOptionsElem,
+	value_list_elem,
 	sinkListElem,
 	sinkOptionsElem,
 	locationElem,
 } from '../../ElemInterface/ElementsInterface';
-import { NODE_URL, SINK_URL, SENSOR_URL } from '../../defineUrl';
+import { NODE_URL, SINK_URL} from '../../defineUrl';
 import LarLngPicker from '../LatLngPicker';
 // react-select : https://github.com/JedWatson/react-select
 
 interface RegisterNodeState {
-	sensorList: Array<sensorListElem>;
 	sinkList: Array<sinkListElem>;
+	valueList: Array<value_list_elem>;
 
 	node_name: string;
 	kind: string;
 	location: locationElem;
 	sink_id: number;
-	sensors: Array<sensorOptionsElem>;
 	nameValid: boolean;
 	kindValid: boolean;
-	sensorValid: boolean;
+	valueValid: boolean;
 	sinkValid: boolean;
 }
 
@@ -38,8 +36,8 @@ RegisterNode
 
 class RegisterNode extends Component<{}, RegisterNodeState> {
 	state: RegisterNodeState = {
-		sensorList: [],
 		sinkList: [],
+		valueList: [],
 
 		node_name: '',
 		kind: '',
@@ -48,28 +46,14 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 			lat: 0,
 		},
 		sink_id: 0,
-		sensors: [],
 
 		nameValid: false,
 		kindValid: false,
-		sensorValid: false,
+		valueValid: false,
 		sinkValid: false,
 	};
 	componentDidMount() {
-		this.getsensorList();
 		this.getsinkList();
-	}
-
-	// Get sensor list from backend
-	getsensorList() {
-		var url = SENSOR_URL;
-
-		fetch(url)
-			.then((res) => res.json())
-			.then((data) => {
-				this.setState({ sensorList: data });
-			})
-			.catch((error) => console.error('Error:', error));
 	}
 
 	// Get sink list from backend
@@ -111,6 +95,25 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 				kindValid: false,
 			});
 		}
+
+		if (nodeKind.value == 'drone'){
+			let DroneOption: Array<value_list_elem> = [
+				{ value_name: 'battery'}, { value_name: 'gps' }, { value_name: 'atm'}, { value_name: 'accelerate' }, { value_name: 'speed' }
+			];
+			this.setState({
+				valueList: DroneOption,
+				valueValid:true
+			});
+		}
+		if (nodeKind.value == 'station'){
+			let StationOption: Array<value_list_elem> = [
+				{ value_name: 'gps'}, { value_name: 'ultrasonic' }
+			];
+			this.setState({
+				valueList: StationOption,
+				valueValid:true
+			});
+		} 
 	}
 
 	// Handle LarLng change by pick lat, lng at map
@@ -118,22 +121,6 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 		this.setState({
 			location,
 		});
-	};
-
-	// Handle selected sensor change by selecting sensors
-	handleSensorsChange = (sensors: any) => {
-		// sensor valid check : user should select more than a sensor
-		if (sensors !== null || sensors !== []) {
-			this.setState({
-				sensors,
-				sensorValid: true,
-			});
-		} else {
-			this.setState({
-				sensors,
-				sensorValid: false,
-			});
-		}
 	};
 
 	// Handle selected sink change by selecting sink
@@ -152,15 +139,52 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 		}
 	};
 
+	handleValueChange = (idx: number) => (
+		e: React.ChangeEvent<HTMLInputElement>
+	) => {
+		// Value list is updated dynamic. Its element can be added or removed freely.
+		// so find changing field by using received idx and change state.
+		const newsensor_values = this.state.valueList.map(
+			(value: value_list_elem, sidx: number) => {
+				if (idx !== sidx) return value;
+				return { ...value, value_name: e.target.value };
+			}
+		);
+
+		// value list valid check : User should enter more than a value and each value input field should be filled
+		if (
+			newsensor_values !== null &&
+			!newsensor_values.some((value) => value.value_name === '') && // find empty field
+			newsensor_values[idx].value_name.length > 0
+		) {
+			this.setState({ valueList: newsensor_values, valueValid: true });
+		} else {
+			this.setState({ valueList: newsensor_values, valueValid: false });
+		}
+	};
+
+	handleRemoveClick = (idx: number) => () => {
+		// Remove #idx value list elem which user picked
+		this.setState({
+			valueList: this.state.valueList.filter(
+				(s: any, sidx: number) => idx !== sidx
+			),
+		});
+	};
+
+	handleAddClick = () => {
+		// Add a value list elem
+		this.setState({
+			valueList: [...this.state.valueList, { value_name: '' }],
+		});
+	};
+
 	// Handle submit button click event
 	handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
 		var url = NODE_URL;
 		var data = this.state;
-		var sensor_id = data.sensors.map((val: sensorOptionsElem) => {
-			return { id: val.id };
-		});
 		var name = this.state.kind + '-' + this.state.node_name;     // 노드종류를 이름 앞에 붙여 서버로 보냄 (ex. trashcan-trashcanNode1)
 
 		// Valid check (unvalid -> alert)
@@ -172,7 +196,7 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 			alert('Please select more than a node kind.');
 			return;
 		}
-		if (!this.state.sensorValid) {
+		if (!this.state.valueValid) {
 			alert('Please select more than a sensor.');
 			return;
 		}
@@ -193,7 +217,6 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 				name: name,
 				lat: data.location.lat,
 				lng: data.location.lng,
-				sensors: sensor_id,
 			})
 		);
 
@@ -204,7 +227,7 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 				lat: data.location.lat,
 				lng: data.location.lng,
 				sink_id: data.sink_id,
-				sensors: sensor_id,
+				sensor_values: data.valueList,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -217,15 +240,6 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 	};
 
 	render() {
-		let sensorOptions: Array<sensorOptionsElem>;
-		sensorOptions = this.state.sensorList.map((val: sensorListElem) => {
-			return {
-				label: val.name.split('-')[1],        
-				value: val.name.split('-')[1],
-				id: val.id,
-				sensor_values: val.sensor_values,
-			};
-		});
 		let sinkOptions: Array<sinkOptionsElem>;
 		sinkOptions = this.state.sinkList.map((val: sinkListElem) => {
 			return { label: val.name, value: val.name, id: val.id };
@@ -287,16 +301,57 @@ class RegisterNode extends Component<{}, RegisterNodeState> {
 										/>
 									</div>
 									<div className="form-group">
-										<label>Select sensors</label>
-										<Select
-											isMulti
-											className="basic-multi-select"
-											name="sensors"
-											options={sensorOptions}
-											classNamePrefix="select"
-											value={this.state.sensors}
-											onChange={this.handleSensorsChange}
-										/>
+										<label>Register sensors</label>
+										{this.state.valueList.map(
+											(value: value_list_elem, idx: number) => (
+												<div className="input-group mb-3">
+													<div className="input-group-prepend">
+														<span className="input-group-text">{idx}</span>
+													</div>
+													<input
+														type="text"
+														className="form-control"
+														name="sensor_values"
+														placeholder={'Enter value name'}
+														value={value.value_name}
+														onChange={this.handleValueChange(idx)}
+													/>
+													<div className="input-group-append">
+														<button
+															className="btn btn-secondary btn-sm"
+															type="button"
+															id="button-addon2"
+															onClick={this.handleRemoveClick(idx)}
+															style={{ background: 'light' }}
+														>
+															<svg
+																width="1em"
+																height="1em"
+																viewBox="0 0 16 16"
+																className="bi bi-trash-fill"
+																fill="currentColor"
+																xmlns="http://www.w3.org/2000/svg"
+															>
+																<path
+																	fill-rule="evenodd"
+																	d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"
+																/>
+															</svg>
+														</button>
+													</div>
+												</div>
+											)
+										)}
+									</div>
+									<div className="form-group">
+										<button
+											type="button"
+											className="btn"
+											onClick={this.handleAddClick}
+											style={{ background: '#82CAFA', color : 'white' }}
+										>
+											Add value
+										</button>
 									</div>
 									<div className="form-group">
 										<label>Select sink</label>

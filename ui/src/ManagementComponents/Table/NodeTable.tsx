@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+	value_list_elem,
 	nodeListElem,
 	nodeHealthCheckElem,
 } from '../../ElemInterface/ElementsInterface';
@@ -114,7 +115,7 @@ class NodeTable extends Component<NodeTableProps, NodeTableState> {
 								<th scope="row">{idx}</th>
 								<td>{node.name.split('-')[1] + '-' + node.name.split('-')[2]}</td>
 								<td>{node.id}</td>
-								<td>{node.sensors.map((sensor: any) => sensor.name.split('-')[1] + ', ')}</td>
+								<td>{node.sensors.map((sensor: value_list_elem) => sensor.value_name + ', ')}</td>
 								{this.findNodeState(node.id)}
 								{this.findNodeBattery(node.id)}
 								<td>
